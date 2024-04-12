@@ -116,7 +116,7 @@ function isPasswordValid(policy, password) {
 
 function processInputData(data) {
   let validPasswordsCount = 0;
-
+ 
   for (const line of data) {
     const [policy, password] = line.split(': ');
 
