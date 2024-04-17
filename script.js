@@ -105,30 +105,59 @@ const inputData = [
   '2-9 c: ccccccccc',
 ];
 
-function isPasswordValid(policy, password) {
-  const [minMax, letter] = policy.split(' ');
-  const [min, max] = minMax.split('-').map(Number);
+const outputData = inputData.map(str => str.split(' '));
 
-  const letterCount = password.split('').filter(char => char === letter).length;
+console.log(outputData);
 
-  return letterCount >= min && letterCount <= max;
+
+function checkLetterOccurrences(letter, str) {
+  const regex = new RegExp(letter, 'g');
+  const count = (str.match(regex) || []).length;
+  return count >= 1 && count <= 3;
 }
 
-function processInputData(data) {
-  let validPasswordsCount = 0;
- 
-  for (const line of data) {
-    const [policy, password] = line.split(': ');
-
-    if (isPasswordValid(policy, password)) {
-      validPasswordsCount++;
-    }
-  }
-
-  return validPasswordsCount;
+for (const str of inputData) {
+  const [range, letter, password] = str.split(' ');
+  const isValid = checkLetterOccurrences(letter.slice(0, -1), password);
+  console.log(`${str}: ${isValid}`);
 }
 
-console.log(processInputData(inputData));
 
 
 
+// Test pour toute la liste
+// const axios = require('axios');
+
+// function checkLetterOccurrences(letter, str) {
+//   const regex = new RegExp(letter, 'g');
+//   const count = (str.match(regex) || []).length;
+//   return count >= 1 && count <= 3;
+// }
+
+// const url = 'https://adventofcode.com/2020/day/2/input';
+
+// axios.get(url)
+//   .then(response => {
+//     const html = response.data;
+//     const inputData = [];
+
+//     // Sélectionnez les éléments HTML contenant les entrées
+//     // et extrayez les données pertinentes
+//     const inputs = html.split('<input');
+//     for (const input of inputs) {
+//       if (input.includes('type="text"')) {
+//         const value = input.split('value="')[1].split('"')[0];
+//         inputData.push(value);
+//       }
+//     }
+
+//     // Vérifiez chaque chaîne de caractères
+//     for (const str of inputData) {
+//       const [range, letter, password] = str.split(' ');
+//       const isValid = checkLetterOccurrences(letter.slice(0, -1), password);
+//       console.log(`${str}: ${isValid}`);
+//     }
+//   })
+//   .catch(error => {
+//     console.error(`Erreur lors de la récupération de la page : ${error}`);
+//   });
